@@ -13,10 +13,10 @@ public class Accuration {
      */
     public static double MAD(double[] Y, double[] F) {
         double mad = 0;
-        for (int t=0; t< Y.length; t++) {
-            mad += Math.abs(Y[t] - F[t]);
+        for (int t = 1; t < Y.length; t++) {
+            mad += Math.abs(Y[t] - F[t-1]);
         }
-        return (mad / Y.length);
+        return (mad / (Y.length - 1));
     }
 
     /**
@@ -29,18 +29,18 @@ public class Accuration {
      */
     public static double MSE(double[] Y, double[] F) {
         double mse = 0;
-        for (int t=0; t< Y.length; t++) {
-            mse += Math.pow(Y[t] - F[t], 2);
+        for (int t = 1; t < Y.length; t++) {
+            mse += Math.pow(Y[t] - F[t-1], 2);
         }
-        return (mse / Y.length);
+        return (mse / (Y.length - 1));
     }
 
     public static double RMSE(double[] Y, double[] F) {
         double mse = 0;
-        for (int t=0; t< Y.length; t++) {
-            mse += Math.pow(Y[t] - F[t], 2);
+        for (int t = 1; t < Y.length; t++) {
+            mse += Math.pow(Y[t] - F[t-1], 2);
         }
-        return Math.sqrt(mse / Y.length);
+        return Math.sqrt(mse / (Y.length - 1));
     }
 
     /**
@@ -54,10 +54,10 @@ public class Accuration {
      */
     public static double MAPE(double[] Y, double[] F) {
         double mape = 0;
-        for (int t=0; t< Y.length; t++) {
-            mape = mape + (Math.abs(Y[t] - F[t]) / Math.abs(Y[t]));
+        for (int t = 1; t < Y.length; t++) {
+            mape = mape + (Math.abs(Y[t] - F[t-1]) / Math.abs(Y[t]));
         }
-        return (mape * (100 / Y.length));
+        return (mape * (100 / (Y.length - 1)));
     }
 
     public static double persen(double[] Y, double[] F, boolean debug) {
@@ -67,6 +67,6 @@ public class Accuration {
             totalAccuration += accuration;
             if (debug) System.out.printf("%d) Y=%.2f, F=%.2f, Acc=%.2f\n", t, Y[t], F[t-1], accuration);
         }
-        return totalAccuration / Y.length;
+        return (totalAccuration / (Y.length - 1));
     }
 }
